@@ -21,13 +21,13 @@
 	<sakai:view title="#{msgs.pvt_repmsg_ALL}">
 		<link rel="stylesheet" href="/messageforums-tool/css/messages.css" type="text/css" />
 		<link rel="stylesheet" href="/library/webjars/jquery-ui/1.12.1/jquery-ui.min.css" type="text/css" />
-		<script type="text/javascript">includeLatestJQuery("msgcntr");</script>
-		<script type="text/javascript" src="/messageforums-tool/js/sak-10625.js"></script>
-		<script type="text/javascript" src="/messageforums-tool/js/messages.js"></script>
-		<script type="text/javascript">includeWebjarLibrary('select2');</script>
-
+		<script>includeLatestJQuery("msgcntr");</script>
+		<script src="/messageforums-tool/js/sak-10625.js"></script>
+		<script src="/messageforums-tool/js/messages.js"></script>
+		<script>includeWebjarLibrary('select2');</script>
+        <%@ include file="/jsp/privateMsg/pvtMenu.jsp" %>
 	<h:form id="pvtMsgForward">
-	<script type="text/javascript">
+	<script>
 		function clearSelection(selectObject)
 		{
 			for (var i=0; i<selectObject.options.length; i++)
@@ -63,6 +63,10 @@
 		  	addTagSelector(document.getElementById('pvtMsgForward:list1'));
 		  	addTagSelector(document.getElementById('pvtMsgForward:list2'));
 		  	resize();
+            var menuLink = $('#messagesMainMenuLink');
+            var menuLinkSpan = menuLink.closest('span');
+            menuLinkSpan.addClass('current');
+            menuLinkSpan.html(menuLink.text());
 		});
 	</script>
 
