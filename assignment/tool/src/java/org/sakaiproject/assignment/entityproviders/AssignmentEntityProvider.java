@@ -1116,6 +1116,10 @@ public class AssignmentEntityProvider extends AbstractEntityProvider implements 
 
         private boolean anonymousGrading;
 
+        private Boolean allowPeerAssessment;
+
+        private String maxGradePoint;
+
         public SimpleAssignment() {
         }
 
@@ -1152,6 +1156,9 @@ public class AssignmentEntityProvider extends AbstractEntityProvider implements 
             this.groups = a.getGroups();
             this.access = a.getTypeOfAccess().toString();
             this.instructions = a.getInstructions();
+            if (a.getTypeOfGrade() == Assignment.GradeType.SCORE_GRADE_TYPE) {
+                this.maxGradePoint = assignmentService.getMaxPointGradeDisplay(a.getScaleFactor(), a.getMaxGradePoint());
+            }
 
             this.anonymousGrading = assignmentService.assignmentUsesAnonymousGrading(a);
 
@@ -1224,6 +1231,8 @@ public class AssignmentEntityProvider extends AbstractEntityProvider implements 
             if (assignmentAllPurposeItem != null) {
                 this.allPurposeItemText = assignmentAllPurposeItem.getText();
             }
+
+            this.allowPeerAssessment = a.getAllowPeerAssessment();
         }
     }
 

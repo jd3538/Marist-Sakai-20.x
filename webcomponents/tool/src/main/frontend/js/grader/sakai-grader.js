@@ -40,7 +40,6 @@ class SakaiGrader extends gradableDataMixin(SakaiElement) {
 
     return {
       // Actual attributes
-      maxGrade: { attribute: "max-grade" , type: String },
       gradableId: { attribute: "gradable-id", type: String },
       submissionId: { attribute: "submission-id", type: String },
       currentStudentId: { attribute: "current-student-id", type: String },
@@ -102,7 +101,11 @@ class SakaiGrader extends gradableDataMixin(SakaiElement) {
       rubric.setAttribute("evaluated-item-id", this._submission.id);
     }
 
-    this.requestUpdate("submission", oldValue);
+    this.requestUpdate();
+
+    if (this.gradable.allowPeerAssessment) {
+      this.updateComplete.then(() => $("#peer-info").popover());
+    }
   }
 
   get submission() { return this._submission; }
@@ -231,9 +234,17 @@ class SakaiGrader extends gradableDataMixin(SakaiElement) {
           }
           ${this.gradeScale === "SCORE_GRADE_TYPE" ? html`
             <span>${this.assignmentsI18n["gen.assign.gra"]}</span>
-            <input aria-label="${this.i18n["number_grade_label"]}" @keydown=${this.validateGradeInput} @keyup=${this.gradeSelected} type="text" size="8" .value=${this.submission.grade} />
+            <input aria-label="${this.i18n["number_grade_label"]}"
+              @keydown=${this.validateGradeInput}
+              @keyup=${this.gradeSelected}
+              type="text"
+              class="points-input"
+              .value=${this.submission.grade} />
             ${this.renderSaved()}
-            <span>(${this.assignmentsI18n["grade.max"]} ${this.maxGrade})</span>
+            <span>(${this.assignmentsI18n["grade.max"]} ${this.gradable.maxGradePoint})</span>
+            ${this.gradable.allowPeerAssessment ? html`
+              <span id="peer-info" class="fa fa-info-circle" data-toggle="popover" data-container="body" data-placement="auto" data-content="${this.assignmentsI18n["peerassessment.peerGradeInfo"]}"></span>
+            ` : ""}
           ` : ""}
           ${this.gradeScale === "PASS_FAIL_GRADE_TYPE" ? html`
             <span>${this.assignmentsI18n["gen.assign.gra"]}</span>
@@ -506,8 +517,10 @@ class SakaiGrader extends gradableDataMixin(SakaiElement) {
 
   onTotalPointsUpdated(e) {
 
-    this.submission.grade = e.detail.value;
-    this.requestUpdate();
+    if (this.rubricShowing) {
+      this.submission.grade = e.detail.value;
+      this.requestUpdate();
+    }
   }
 
   onRubricRatingChanged(e) {
@@ -553,12 +566,26 @@ class SakaiGrader extends gradableDataMixin(SakaiElement) {
     this.gradableDataLoader.then(data => doIt(data));
   }
 
+  /**
+   * Bundle up and all the needed stuff, like the grade, rubric, instructor comments and attachments.
+   */
   getFormData() {
 
     let formData = new FormData();
 
+    formData.valid = true;
+
     this.querySelector("sakai-grader-file-picker").files.forEach((f,i) => formData.set(`attachment${i}`, f, f.name));
     formData.set("grade", this.submission.grade);
+
+    if (this.gradeScale === "SCORE_GRADE_TYPE"
+      && (parseFloat(this.submission.grade.replace(",", ".")) > parseFloat(this.gradable.maxGradePoint.replace(",", ".")))) {
+      if (!confirm(this.tr("confirm_exceed_max_grade", [this.gradable.maxGradePoint], "grader"))) {
+        formData.valid = false;
+      } else {
+        formData.set("grade", this.submission.grade);
+      }
+    }
     formData.set("feedbackText", this.submission.feedbackText);
     formData.set("feedbackComment", this.submission.feedbackComment);
     formData.set("privateNotes", this.submission.privateNotes);
@@ -588,22 +615,27 @@ class SakaiGrader extends gradableDataMixin(SakaiElement) {
   }
 
   /**
-   * Bundle up and post all the needed stuff, like the grade, rubric, instructor comments and attachments.
+   * Submit the data, but don't release.
    */
   save() {
 
     let formData = this.getFormData();
-    this.submitGradingData(formData);
+    formData.set("gradeOption", "retract");
+    if (formData.valid) {
+      this.submitGradingData(formData);
+    }
   }
 
   /**
-   * Same as save, but with release being set
+   * Same as save, but release.
    */
   saveAndRelease() {
 
     let formData = this.getFormData();
-    formData.set("gradeOption", "release");
-    this.submitGradingData(formData);
+    if (formData.valid) {
+      formData.set("gradeOption", "release");
+      this.submitGradingData(formData);
+    }
   }
 
   submitGradingData(formData) {
@@ -662,9 +694,20 @@ class SakaiGrader extends gradableDataMixin(SakaiElement) {
 
   validateGradeInput(e) {
 
-    if (e.keyCode === 190) {
+    if (e.key === "Backspace" || e.key === "ArrowLeft" || e.key === "ArrowRight") {
+      return true;
+    } else if (!e.key.match(/[0-9\.,]/)) {
       e.preventDefault();
       return false;
+    } else {
+      const number = e.target.value.replace(",", ".");
+
+      const numDecimals = number.includes(".") ? number.split(".")[1].length : 0;
+
+      if (numDecimals == 2) {
+        e.preventDefault();
+        return false;
+      }
     }
   }
 
