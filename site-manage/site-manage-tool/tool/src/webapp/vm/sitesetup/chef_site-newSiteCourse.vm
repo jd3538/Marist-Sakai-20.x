@@ -162,8 +162,8 @@
 									#set ($courseNumber = $courseNumber +1)
 									</h5>
 								</td>
-								## Change (01) Begins - JD - 20180322
-								##<td>
+                                                                ## Change (01) Begins - JD - 20180322
+                                                                ##<td>
 								##	#set($sectionDescription=false)
 								##	#set($sectionDescription=$!sectionObject.description)
 								##	#if ($!sectionDescription && !$!sectionDescription.isEmpty())
@@ -172,7 +172,7 @@
 								##				checked="checked"
 								##			#end 
 								##		/>
-                                      ##  <label for="courseDesc$courseNumber" class="skip">$tlang.getString("useOfficialDescription"): $formattedText.escapeHtml($sectionObject.title) ($sectionObject.eid) $!sectionObject.getCategoryDescription()</label>
+                                     ##   <label for="courseDesc$courseNumber" class="skip">$tlang.getString("useOfficialDescription"): $formattedText.escapeHtml($sectionObject.title) ($sectionObject.eid) $!sectionObject.getCategoryDescription()</label>
 								##	#end
 								##</td>
 								## Change (01) Ends - JD - 20180322
