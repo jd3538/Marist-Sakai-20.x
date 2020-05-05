@@ -820,7 +820,10 @@ li.organizeFavorites:not(.active) .favoriteCountAndWarning.maxFavoritesReached {
 
 		&[aria-checked="true"] :last-child, &[aria-checked="false"] :first-child {
 			background: $button-primary-hover-background;
-			color: $button-primary-text-color;
+//                      Change (01) Begins - JD - 20180322			
+//			color: $button-primary-text-color;
+			color: $button-primary-background;
+//                      Change (01) Ends - JD - 20180322
 		}
 
 		span {

@@ -38,17 +38,34 @@ $default-line-height: 1.42857;											// 20px / 14px = 1.42857
 $header-font-family: $font-family;
 $header-font-weight: 700 !default;										// 400 or 700 as you wish
 
-/* Color palette */
-$background-color: 			 #FFFFFF !default;
-$background-color-secondary: #000036 !default;
+//Marist Colors
+$marist-red: #B31B1B;
+$marist-blue: #008999;
+$marist-light-blue: #26AFBF;
+$marist-white: #FCFEFF;
+$marist-grey: #E5E9EA;
+$marist-black: #080A0A;
+$marist-yellow: #FFFF33;
+$marist-link-blue: #006E7A;
+$marist-link-blue-hover: #1A8894;
 
-$primary-color:    			 #15597e !default;
-$primary-color-highContrast: darken( $primary-color, 4% ) !default;	// for use of primary on non-white light backgrounds, such as greys
+/* Color palette */
+//$background-color: 			 #FFFFFF !default;
+$background-color: 			 $marist-white !default;
+//$background-color-secondary: #000036 !default;
+$background-color-secondary: $marist-red !default;
+
+//$primary-color:    			 #15597e !default;
+$primary-color:    			 $marist-grey-dk !default;
+//$primary-color-highContrast: darken( $primary-color, 4% ) !default;	// for use of primary on non-white light backgrounds, such as greys
+$primary-color-highContrast: darken( $primary-color, 60% ) !default;	// for use of primary on non-white light backgrounds, such as greys
 $primary-color-shadow:			 adjust-hue( $primary-color, 5 ) !default;	// To give primary a darker shadow
-$secondary-color:  			 #F00 !default;
+//$secondary-color:  			 #F00 !default;
+$secondary-color:  			 $marist-red !default;
 $alt-colour: 				 #d36f00 !default;
 
-$text-color:				 #212121 !default;
+//$text-color:				 #212121 !default;
+$text-color:				 $marist-black !default;
 $text-color-disabled:		 #767676 !default;
 
 $body-background-color: #FAFAFA !default;
@@ -58,9 +75,12 @@ $portal-mask-background:  rgba(0,0,0,0.5) !default;
 
 /* Tool tabs */
 $tool-background-color:		 $background-color !default;
-$tool-menu-background-color:			 $body-background-color !default;
-$tool-menu-color: 			 #424242 !default;
-$tool-border-color:			 #E5E5E5 !default;
+//$tool-menu-background-color:			 $body-background-color !default;
+$tool-menu-background-color:			 $marist-grey !default;
+//$tool-menu-color: 			 #424242 !default;
+$tool-menu-color: 			 $marist-black !default;
+//$tool-border-color:			 #E5E5E5 !default;
+$tool-border-color:			 $marist-blue !default;
 
 $tool-tab-height:                                         32px !default;
 $tool-tab-text-color:                                     $tool-menu-color !default;
@@ -68,12 +88,17 @@ $tool-tab-text-size:                                      12px !default;
 $tool-tab-text-weight:                                    normal !default;
 $tool-tab-text-transform:                                 none !default;
 $tool-tab-text-letter-spacing:                            normal !default;
-$tool-tab-background-color:                               $tool-menu-background-color !default;
-$tool-tab-border-color:                                   #E5E5E5 !default;
-$tool-tab-hover-text-color:                               #191919 !default;
-$tool-tab-hover-background-color:                         #ECECEC !default;
+//$tool-tab-background-color:                               $tool-menu-background-color !default;
+$tool-tab-background-color:                               $marist-white !default;
+//$tool-tab-border-color:                                   #E5E5E5 !default;
+$tool-tab-border-color:                                   $marist-blue !default;
+//$tool-tab-hover-text-color:                               #191919 !default;
+$tool-tab-hover-text-color:                               $maist-white !default;
+//$tool-tab-hover-background-color:                         #ECECEC !default;
+$tool-tab-hover-background-color:                         $marist-blue !default;
 $tool-tab-hover-highlight-color:                          #7F7F7F !default;
-$tool-tab-active-text-color:                              $primary-color !default;
+//$tool-tab-active-text-color:                              $primary-color !default;
+$tool-tab-active-text-color:                              $marist-blue !default;
 $tool-tab-active-text-size:                               12px !default;
 $tool-tab-active-background-color:                        #FFFFFF !default;
 $tool-tab-active-highlight-color:                         $primary-color !default;
@@ -98,13 +123,18 @@ $top-header-profile-border-color-inner: $top-header-background !default;
 $sites-nav-background: $tool-menu-background-color !default;
 
 $breadcrumbs-color:			$text-color !default;
-$breadcrumbs-tool-color:	$primary-color !default;
-$breadcrumbs-hover-color:	$primary-color !default;
+//$breadcrumbs-tool-color:	$primary-color !default;
+$breadcrumbs-tool-color:	$marist-blue !default;
+//$breadcrumbs-hover-color:	$primary-color !default;
+$breadcrumbs-hover-color:	darken( $marist-blue, 10% ) !default;
 
 /* Link colors */
-$link-color: $primary-color !default;
-$link-active-color: $primary-color !default;
-$link-hover-color: $primary-color !default;
+//$link-color: $primary-color !default;
+$link-color: $marist-link-blue !default;
+//$link-active-color: $primary-color !default;
+$link-active-color: $marist-link-blue !default;
+//$link-hover-color: $primary-color !default;
+$link-hover-color: $marist-link-blue-hover !default;
 $link-background-color: transparent !default;
 $link-active-background-color: transparent !default;
 $link-hover-background-color: transparent !default;
@@ -115,15 +145,21 @@ $button-radius-pill:            16px !default;
 $button-text-transform:         none !default;
 
 // Default (non-primary) button design:
-$button-text-color:             #333;
-$button-background:             linear-gradient(#fff, #f9f9f9);
-$button-border-color:           #ccc;
+//$button-text-color:             #333;
+$button-text-color:             $marist-blue;
+//$button-background:             linear-gradient(#fff, #f9f9f9);
+$button-background:             $marist-white;
+//$button-border-color:           #ccc;
+$button-border-color:           $marist-blue;
 $button-font-weight:            400 !default;
 $button-shadow:                 0 1px 0 rgba(255,255,255,0.15) inset !default;
 // hover and focus states:
-$button-hover-text-color:       $button-text-color;
-$button-hover-background:       $button-background;
-$button-hover-border-color:     #999;
+//$button-hover-text-color:       $button-text-color;
+$button-hover-text-color:       $marist-white;
+//$button-hover-background:       $button-background;
+$button-hover-background:       $marist-blue;
+//$button-hover-border-color:     #999;
+$button-hover-border-color:     $marist-blue;
 $button-hover-shadow:           $button-shadow !default;
 // active state:
 $button-active-text-color:      $button-text-color;
@@ -139,16 +175,22 @@ $button-disabled-shadow:        none;
 $button-disabled-font-weight:   300;
 
 // Primary action button design:
-$button-primary-text-color:                 #fff;
-$button-primary-background:                 $primary-color;
-$button-primary-border-color:               #326b97;
+//$button-primary-text-color:                 #fff;
+$button-primary-text-color:                 $marist-blue;
+//$button-primary-background:                 $primary-color;
+$button-primary-background:                 $marist-white;
+//$button-primary-border-color:               #326b97;
+$button-primary-border-color:               $marist-blue;
 $button-primary-text-transform:             none !default;
 $button-primary-font-weight:                400 !default;
 $button-primary-shadow:                     $button-shadow !default;
 // hover and focus states for primary action button:
-$button-primary-hover-text-color:           $button-primary-text-color;
-$button-primary-hover-background:           #176691;
-$button-primary-hover-border-color:         #124466;
+//$button-primary-hover-text-color:           $button-primary-text-color;
+$button-primary-hover-text-color:           $marist-white;
+//$button-primary-hover-background:           #176691;
+$button-primary-hover-background:           $marist-blue;
+//$button-primary-hover-border-color:         #124466;
+$button-primary-hover-border-color:         $marist-blue;
 $button-primary-hover-shadow:               $button-shadow !default;
 // active state for primary action button:
 $button-primary-active-text-color:          $button-primary-text-color;
@@ -198,29 +240,38 @@ $errorBanner-icon: ".fa-ban";
 
 /* Swapped 'View As' view */
 $swapped-view-enabled: false !default;
-$swapped-view-primary: 		 #bf360c !default;
+//$swapped-view-primary: 		 #bf360c !default;
+$swapped-view-primary: 		 $marist-red !default;
 
 /* Admin Become User view */
 $become-user-primary: #52b387 !default;
 
 /* This is the gradient in the header of the page */
-$header-gradient-a: #fafafa !default;
-$header-gradient-b: $header-gradient-a !default;
-$header-gradient-c: $header-gradient-a !default;
-$header-gradient-d: $header-gradient-a !default;
+//$header-gradient-a: #fafafa !default;
+$header-gradient-a: $marist-grey-dk !default;
+//$header-gradient-b: $header-gradient-a !default;
+$header-gradient-b: $marist-grey-dk !default;
+//$header-gradient-c: $header-gradient-a !default;
+$header-gradient-c: $marist-grey-dk !default;
+//$header-gradient-d: $header-gradient-a !default;
+$header-gradient-d: $marist-grey-dk !default;
 
 /* topNav Main Menu */
 $header-size: 50px !default;
-$topNav-text-color:                         #fff !default; 		// used for links and text in the topNav
-$topNav-alt-color:                     		#9c9c9c !default;	// used for topNav spacers
+//$topNav-text-color:                         #fff !default; 		// used for links and text in the topNav
+$topNav-text-color:                         $marist-white !default; 		// used for links and text in the topNav
+//$topNav-alt-color:                     		#9c9c9c !default;	// used for topNav spacers
+$topNav-alt-color:                     		$marist-red !default;	// used for topNav spacers
 
 /* Favorites */
 $sites-nav-menu-item-border-thickness:		1px !default;
 $sites-nav-menu-item-border-radius:         0px !default;
 /* Favorites - item */
-$sites-nav-menu-item-background:            #FFFFFF !default;
+//$sites-nav-menu-item-background:            #FFFFFF !default;
+$sites-nav-menu-item-background:            $marist-white !default;
 
-$sites-nav-menu-item-color:                 #4C4C4C !default;
+//$sites-nav-menu-item-color:                 #4C4C4C !default;
+$sites-nav-menu-item-color:                 $marist-black !default;
 $sites-nav-menu-item-border-color:          #E5E5E5 !default;
 $sites-nav-menu-item-border-top:            $sites-nav-menu-item-border-thickness solid $sites-nav-menu-item-border-color !default;
 $sites-nav-menu-item-border-right:          $sites-nav-menu-item-border-top !default;
@@ -239,8 +290,10 @@ $sites-nav-menu-item-hover-border-left:     $sites-nav-menu-item-hover-border-to
 
 /* Favorites - item selected */
 $sites-nav-menu-item-selected-background:   $primary-color !default;
-$sites-nav-menu-item-selected-color:        #FFFFFF !default;
-$sites-nav-menu-item-selected-border-color: #326B97 !default;
+//$sites-nav-menu-item-selected-color:        #FFFFFF !default;
+$sites-nav-menu-item-selected-color:        $marist-black !default;
+//$sites-nav-menu-item-selected-border-color: #326B97 !default;
+$sites-nav-menu-item-selected-border-color: $marist-blue !default;
 $sites-nav-menu-item-selected-font-weight:  600 !default
 $sites-nav-menu-item-selected-border-top:   $sites-nav-menu-item-border-thickness solid $sites-nav-menu-item-selected-border-color !default;
 $sites-nav-menu-item-selected-border-right: $sites-nav-menu-item-selected-border-top !default;
@@ -248,8 +301,10 @@ $sites-nav-menu-item-selected-border-bottom:$sites-nav-menu-item-selected-border
 $sites-nav-menu-item-selected-border-left:  $sites-nav-menu-item-selected-border-top !default;
 
 /* Favorites - item selected and hovered */
-$sites-nav-menu-item-selected-hover-background:   lighten($sites-nav-menu-item-selected-background, 5%) !default;
-$sites-nav-menu-item-selected-hover-color:        #FFFFFF !default;
+//$sites-nav-menu-item-selected-hover-background:   lighten($sites-nav-menu-item-selected-background, 5%) !default;
+$sites-nav-menu-item-selected-hover-background:   $sites-nav-menu-item-selected-background !default;
+//$sites-nav-menu-item-selected-hover-color:        #FFFFFF !default;
+$sites-nav-menu-item-selected-hover-color:        $marist-black !default;
 $sites-nav-menu-item-selected-hover-border-color: $sites-nav-menu-item-selected-border-color !default;
 $sites-nav-menu-item-selected-hover-border-top:   $sites-nav-menu-item-border-thickness solid $sites-nav-menu-item-selected-hover-border-color !default;
 $sites-nav-menu-item-selected-hover-border-right: $sites-nav-menu-item-selected-hover-border-top !default;
@@ -335,7 +390,8 @@ $all-sites-tool-menu-text-size:                           12px !default;
 $all-sites-tool-menu-text-weight:                         normal !default;
 $all-sites-tool-menu-icon-color:                          #666666 !default;
 $all-sites-tool-menu-left-border:                         4px solid transparent !default;
-$all-sites-tool-menu-hover-background-color:              #ECECEC !default;
+//$all-sites-tool-menu-hover-background-color:              #ECECEC !default;
+$all-sites-tool-menu-hover-background-color:              $marist-grey-dk !default;
 $all-sites-tool-menu-hover-text-color:                    #191919 !default;
 $all-sites-tool-menu-hover-icon-color:                    #424242 !default;
 $all-sites-tool-menu-hover-left-border:                   4px solid #7F7F7F !default;
@@ -382,12 +438,16 @@ $tool-menu-item-hidden-hover-text-color:                   $tool-menu-item-hover
 $tool-menu-item-hidden-hover-icon-color:                   $tool-menu-item-hover-icon-color !default;
 $tool-menu-item-hidden-hover-background-color:             $tool-menu-item-hover-background-color !default;
 $tool-menu-item-hidden-hover-border-left:                  $tool-menu-item-hover-border-left !default;
-$tool-menu-item-selected-text-color:                       $primary-color !default;
-$tool-menu-item-selected-icon-color:                       $primary-color !default;
+//$tool-menu-item-selected-text-color:                       $primary-color !default;
+$tool-menu-item-selected-text-color:                       $marist-blue !default;
+//$tool-menu-item-selected-icon-color:                       $primary-color !default;
+$tool-menu-item-selected-icon-color:                       $marist-blue !default;
 $tool-menu-item-selected-background-color:                 #FFFFFF !default;
 $tool-menu-item-selected-border-left:                      4px solid $primary-color !default;
-$tool-menu-item-selected-hover-text-color:                 $primary-color !default;
-$tool-menu-item-selected-hover-icon-color:                 $primary-color !default;
+//$tool-menu-item-selected-hover-text-color:                 $primary-color !default;
+$tool-menu-item-selected-hover-text-color:                 $marist-red !default;
+//$tool-menu-item-selected-hover-icon-color:                 $primary-color !default;
+$tool-menu-item-selected-hover-icon-color:                 $marist-red !default;
 $tool-menu-item-selected-hover-background-color:           #FFFFFF !default;
 $tool-menu-item-selected-hover-border-left:                4px solid $primary-color !default;
 
@@ -412,13 +472,19 @@ $tool-menu-collapse-min-hover-shadow:                      $tool-menu-collapse-s
 
 
 /* Tool sub menu */
-$tool-sub-menu-border-color: darken( $tool-menu-background-color, 10% ) !default;
-$tool-sub-menu-background-color: darken( $tool-menu-background-color, 10% ) !default;
-$tool-sub-menu-hover-background-color: $primary-color !default;
+//$tool-sub-menu-border-color: darken( $tool-menu-background-color, 10% ) !default;
+$tool-sub-menu-border-color: darken( $marist-black, 10% ) !default;
+//$tool-sub-menu-background-color: darken( $tool-menu-background-color, 10% ) !default;
+$tool-sub-menu-background-color: darken( $marist-white, 10% ) !default;
+//$tool-sub-menu-hover-background-color: $primary-color !default;
+$tool-sub-menu-hover-background-color: $marist-grey-dk !default;
 $tool-sub-menu-hover-color: #FFF !default;
-$tool-sub-menu-current-color: $primary-color !default;
-$tool-sub-menu-current-background-color: $background-color !default;
-$tool-sub-menu-current-hover-color: $tool-menu-color !default;
+//$tool-sub-menu-current-color: $primary-color !default;
+$tool-sub-menu-current-color: $marist-grey-dk !default;
+//$tool-sub-menu-current-background-color: $background-color !default;
+$tool-sub-menu-current-background-color: $marist-black !default;
+//$tool-sub-menu-current-hover-color: $tool-menu-color !default;
+$tool-sub-menu-current-hover-color: lightne( $marist-blue, 10% ) !default;
 $tool-sub-menu-current-hover-background-color: $background-color !default;
 
 /* Tool menu - lessons subpage menu enabled - top level pages */
@@ -460,9 +526,12 @@ $measure: 960px !default;
 $banner-height: 52px !default;
 
 /* Logo location */
-$logo: 'images/logo-jewel.png' !default;
+//$logo: 'images/logo-jewel.png' !default;
+$logo: 'images/logo.png' !default;
+//$logo-height: 29px !default;
 $logo-height: 36px !default;
-$logo-width: 126px !default;
+//$logo-width: 126px !default;
+$logo-width: 90x !default;
 
 /* Tool icons */
 $skin-with-icons: true !default;
@@ -486,7 +555,8 @@ $footer-background-color: $tool-menu-background-color;
 $footer-border-color: $tool-border-color;
 $footer-font-size: 12px;
 $footer-color: $text-color;
-$footer-link-separator: #ccc;
+//$footer-link-separator: #ccc;
+$footer-link-separator: darker(#ccc, 40%) !default;
 
 // Overview page column widths. Total to add up to 96% as the columns have a margin.
 $col1of2-width: 48% !default;

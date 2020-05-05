@@ -1,3 +1,6 @@
+
+// Change (01) - JD - 20180322 Change counter color to add contrast between Marist red banner
+
 #bullhorn-counter {
     color: #fff;
     font-weight: bold;
@@ -13,7 +16,8 @@
 }
 
 .bullhorn-counter-red {
-    background-color: #a20000;
+//  background-color: #a20000; Change(01) - JD - 20180322
+    background-color: #008999;
 }
 
 .portal-bullhorns.qtip {
