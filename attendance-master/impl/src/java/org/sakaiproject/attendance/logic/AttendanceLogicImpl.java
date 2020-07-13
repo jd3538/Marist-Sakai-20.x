@@ -796,12 +796,12 @@ public class AttendanceLogicImpl implements AttendanceLogic {
 		final List<GradingRule> rules = getGradingRulesForSite(attendanceSite);
 		final AttendanceUserStats userStats = getStatsForUser(userId);
 
-		Double totalPoints;
-		if (!attendanceSite.getAutoGradeBySubtraction()) {
-			totalPoints = 0D;
-		} else {
-			totalPoints = attendanceSite.getMaximumGrade();
+		Double totalPoints = 0D;
+                Double maximumGrade = attendanceSite.getMaximumGrade();
+		if (attendanceSite.getAutoGradeBySubstraction() && maximumGrade != null) {
+		        totalPoints = maximumGrade;
 		}
+
 
 		if (rules != null) {
 			for (GradingRule rule : rules) {
