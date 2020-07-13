@@ -43,6 +43,9 @@
     #end
     ## Change (01) Ends - JD - 20180322
     <form name="typeform" id="typeform" action="#toolForm("$action")&special=upload" method="post">
+        ## Change (01) Begins - JD - 20180322
+	#if ($canImportArchive)
+	## Change (01) Ends - JD - 20180322
         #if ($multipleTypes)
             <p class="checkbox indnt1">
                 ## only show the radio button when there is any template site defined
@@ -55,7 +58,9 @@
             <input type="hidden" name="createMode" id="buildOwn" value="buildOwn" />
             <p>$tlang.getString("sitetype.chothetyp.withouttemplate")</p>
         #end
-
+	## Change (01) Begins - JD - 20180322
+	#end
+        ## Change (01) Ends - JD - 20180322
         ## NOTE: end if create from template enabled
         #* following block should show if "build own" has been selected,
          a site type has been picked, and then the user (from the next screen) hits "back"  - the "Build own" radio
