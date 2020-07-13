@@ -798,7 +798,7 @@ public class AttendanceLogicImpl implements AttendanceLogic {
 
 		Double totalPoints = 0D;
                 Double maximumGrade = attendanceSite.getMaximumGrade();
-		if (attendanceSite.getAutoGradeBySubstraction() && maximumGrade != null) {
+		if (attendanceSite.getAutoGradeBySubtraction() && maximumGrade != null) {
 		        totalPoints = maximumGrade;
 		}
 
