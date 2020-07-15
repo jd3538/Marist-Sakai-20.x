@@ -36,13 +36,13 @@ $material-elevation-7dp: 0 4px 5px -2px rgba(0,0,0,.2), 0 7px 10px 1px rgba(0,0,
 $material-elevation-8dp: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12) !default;
 
 @if $portal-as-material {
-    $primary-color: #15597e;
-    $secondary-color: #42AAE0;
+//  $primary-color: #15597e;  Marist
+//  $secondary-color: #42AAE0;  Marist
     $body-background-color: #fff;
-    $top-header-background: $primary-color;
-    $tool-menu-background-color: $body-background-color;
-    $sites-nav-background: $body-background-color;
-    $footer-background-color: $body-background-color;
+//  $top-header-background: $primary-color;  Marist  
+//  $tool-menu-background-color: $body-background-color;  Marist
+//  $sites-nav-background: $body-background-color;  Marist
+//  $footer-background-color: $body-background-color;  Marist
 }
 
 @if $sites-nav-as-material {
@@ -50,8 +50,8 @@ $material-elevation-8dp: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,
     $sites-nav-menu-item-border-thickness: 1px;
     $sites-nav-menu-item-border-radius: $button-radius-pill;
     
-    $sites-nav-menu-item-background: hsla(0, 0%, 92%, 1);
-    $sites-nav-menu-item-color: hsla(0, 0%, 25%, 1);
+//  $sites-nav-menu-item-background: hsla(0, 0%, 92%, 1);  Marist
+//  $sites-nav-menu-item-color: hsla(0, 0%, 25%, 1);  Marist
     $sites-nav-menu-item-border-color: $sites-nav-menu-item-background;
     $sites-nav-menu-item-border-top:            $sites-nav-menu-item-border-thickness solid $sites-nav-menu-item-border-color;
     $sites-nav-menu-item-border-right:          $sites-nav-menu-item-border-top;
@@ -67,29 +67,29 @@ $material-elevation-8dp: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,
     $sites-nav-menu-item-hover-border-left:     $sites-nav-menu-item-hover-border-top;
     
     $sites-nav-menu-item-selected-background: hsla(200, 31%, 84%,1);
-    $sites-nav-menu-item-selected-color: hsl(201, 71%, 20%);
-    $sites-nav-menu-item-selected-border-color: $sites-nav-menu-item-selected-background;
-    $sites-nav-menu-item-selected-border-top:   $sites-nav-menu-item-border-thickness solid $sites-nav-menu-item-selected-border-color;
-    $sites-nav-menu-item-selected-border-bottom:$sites-nav-menu-item-selected-border-top;
-    $sites-nav-menu-item-selected-border-left:  $sites-nav-menu-item-selected-border-top;
-    $sites-nav-menu-item-selected-border-right: $sites-nav-menu-item-selected-border-top;
+//  $sites-nav-menu-item-selected-color: hsl(201, 71%, 20%);  Marist
+//  $sites-nav-menu-item-selected-border-color: $sites-nav-menu-item-selected-background;  Marist
+//  $sites-nav-menu-item-selected-border-top:   $sites-nav-menu-item-border-thickness solid $sites-nav-menu-item-selected-border-color;  Marist
+//  $sites-nav-menu-item-selected-border-bottom:$sites-nav-menu-item-selected-border-top;  Marist
+//  $sites-nav-menu-item-selected-border-left:  $sites-nav-menu-item-selected-border-top;  Marist
+//  $sites-nav-menu-item-selected-border-right: $sites-nav-menu-item-selected-border-top;  Marist
     
-    $sites-nav-menu-item-selected-hover-background:   hsla(200, 31%, 76%,1);
-    $sites-nav-menu-item-selected-hover-color: hsl(201, 71%, 20%);
-    $sites-nav-menu-item-selected-hover-border-color: $sites-nav-menu-item-selected-hover-background;
-    $sites-nav-menu-item-selected-hover-border-top:   $sites-nav-menu-item-border-thickness solid $sites-nav-menu-item-selected-hover-border-color;
-    $sites-nav-menu-item-selected-hover-border-right: $sites-nav-menu-item-selected-hover-border-top;
-    $sites-nav-menu-item-selected-hover-border-bottom:$sites-nav-menu-item-selected-hover-border-top;
-    $sites-nav-menu-item-selected-hover-border-left:  $sites-nav-menu-item-selected-hover-border-top;
+//  $sites-nav-menu-item-selected-hover-background:   hsla(200, 31%, 76%,1);  Marist
+//  $sites-nav-menu-item-selected-hover-color: hsl(201, 71%, 20%);  Marist
+//  $sites-nav-menu-item-selected-hover-border-color: $sites-nav-menu-item-selected-hover-background;  Marist
+//  $sites-nav-menu-item-selected-hover-border-top:   $sites-nav-menu-item-border-thickness solid $sites-nav-menu-item-selected-hover-border-color;  Marist
+//  $sites-nav-menu-item-selected-hover-border-right: $sites-nav-menu-item-selected-hover-border-top;  Marist
+//  $sites-nav-menu-item-selected-hover-border-bottom:$sites-nav-menu-item-selected-hover-border-top;  Marist
+//  $sites-nav-menu-item-selected-hover-border-left:  $sites-nav-menu-item-selected-hover-border-top;  Marist
     
     $sites-nav-selected-submenu-border-color: #fff;
     $sites-nav-selected-submenu-border-color: transparent;
     $sites-nav-selected-submenu-border: none; 
-    $sites-nav-submenu-border: none;
+//  $sites-nav-submenu-border: none;  Marist
     $sites-nav-submenu-item-left-border: none;
     $sites-nav-submenu-item-padding: $material-menu-item-padding;
     $sites-nav-submenu-padding: $material-menu-padding;
-    $sites-nav-submenu-shadow: $material-elevation-8dp;
+//  $sites-nav-submenu-shadow: $material-elevation-8dp;  Marist
     $sites-nav-submenu-top: -#{$standard-spacing}; //fallback to calc( #{$default-font-size} + #{$sites-nav-menu-item-border-thickness})
 }
 
@@ -133,20 +133,20 @@ $material-elevation-8dp: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,
     $button-text-transform: none;
 
     // Default (non-primary) button design:
-    $button-text-color: $primary-color;
-    $button-background: $background-color;
-    $button-border-color: $button-text-color;
+//  $button-text-color: $primary-color;  Marist
+//  $button-background: $background-color;  Marist
+//  $button-border-color: $button-text-color;  Marist
     $button-font-weight: 600;
     $button-shadow: none;
     // hover and focus states:
-    $button-hover-text-color: $button-text-color;
-    $button-hover-background: #F7F9FA;
-    $button-hover-border-color: $button-hover-text-color;
+//  $button-hover-text-color: $button-text-color;  Marist
+//  $button-hover-background: #F7F9FA;  Marist
+//  $button-hover-border-color: $button-hover-text-color;  Marist
     $button-hover-shadow: none;
     // active state:
-    $button-active-text-color:$button-text-color;
+//  $button-active-text-color:$button-text-color;  Marist
     $button-active-background: #E3EBF0;
-    $button-active-border-color:    $button-hover-border-color;
+//  $button-active-border-color:    $button-hover-border-color;  Marist
     $button-active-shadow-color: rgba(0,0,0,0);
     $button-active-shadow: none;
     // disabled state:
@@ -157,22 +157,22 @@ $material-elevation-8dp: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,
     $button-disabled-font-weight:   300;
 
     // Primary action button design:
-    $button-primary-text-color:                 #fff;
-    $button-primary-background:                 $primary-color;
-    $button-primary-border-color:               $primary-color;
+//  $button-primary-text-color:                 #fff;  Marist
+//  $button-primary-background:                 $primary-color;  Marist
+//  $button-primary-border-color:               $primary-color;  Marist
     $button-primary-text-transform: uppercase;
     $button-primary-font-weight: 600;
     $button-primary-shadow: $material-elevation-2dp;
  
     // hover and focus states for primary action button:
-    $button-primary-hover-text-color:           $button-primary-text-color;
-    $button-primary-hover-background:           #266688;
-    $button-primary-hover-border-color:         #266688;
+//  $button-primary-hover-text-color:           $button-primary-text-color;  Marist
+//  $button-primary-hover-background:           #266688;  Marist
+//  $button-primary-hover-border-color:         #266688;  Marist
     $button-primary-hover-shadow: $material-elevation-4dp;
     // active state for primary action button:
-    $button-primary-active-text-color:          $button-primary-text-color;
-    $button-primary-active-background:          #5a93ab;
-    $button-primary-active-border-color:        $button-primary-active-background;
+//  $button-primary-active-text-color:          $button-primary-text-color;  Marist
+//  $button-primary-active-background:          #5a93ab;  Marist
+//  $button-primary-active-border-color:        $button-primary-active-background;  Marist
     $button-primary-active-shadow-color:        $button-active-shadow-color;
     $button-primary-active-shadow:              $material-elevation-4dp;
 }
@@ -184,11 +184,11 @@ $material-elevation-8dp: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,
     $top-header-text-display: none;
     $top-header-icon-size: calc(#{$standard-spacing} * 2);
     $top-header-sites-padding-top: 6px;
-    $top-header-profile-border-color-top: $secondary-color;
-    $top-header-profile-border-color-right: $secondary-color;
-    $top-header-profile-border-color-bottom: $alt-colour;
-    $top-header-profile-border-color-left: $background-color-secondary;
-    $top-header-profile-border-color-inner: #fff;
+//  $top-header-profile-border-color-top: $secondary-color;  Marist
+//  $top-header-profile-border-color-right: $secondary-color;  Marist
+//  $top-header-profile-border-color-bottom: $alt-colour;  Marist
+//  $top-header-profile-border-color-left: $background-color-secondary;  Marist
+//  $top-header-profile-border-color-inner: #fff;  Marist
 }
 
 @if $cards-as-material {
