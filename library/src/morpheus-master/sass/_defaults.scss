@@ -245,7 +245,8 @@ $swapped-view-enabled: false !default;
 $swapped-view-primary: 		 $marist-red !default;
 
 /* Admin Become User view */
-$become-user-primary: #52b387 !default;
+//$become-user-primary: #52b387 !default;
+$become-user-primary: $marist-red !default;
 
 /* This is the gradient in the header of the page */
 //$header-gradient-a: #fafafa !default;
