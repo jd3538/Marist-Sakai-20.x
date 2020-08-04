@@ -7,6 +7,11 @@ import org.sakaiproject.onedrive.model.OneDriveUser;
 
 /**
  * Interface for communicating with the OneDrive API.
+ *
+ * Changes
+ * 
+ * 01 - JD - 20180322 - Update endpoint login tenant from common to maristcollege
+ *
  */
 public interface OneDriveService {
 
@@ -31,7 +36,10 @@ public interface OneDriveService {
 	// ENDPOINTS
 	public final String ENDPOINT_AUTHORIZE = "authorize";
 	public final String ENDPOINT_GRAPH = "https://graph.microsoft.com/v1.0/";
-	public final String ENDPOINT_LOGIN = "https://login.microsoftonline.com/common/oauth2/v2.0/";
+	// Change (01) - Begins - JD
+	// public final String ENDPOINT_LOGIN = "https://login.microsoftonline.com/common/oauth2/v2.0/";
+	public final String ENDPOINT_LOGIN = "https://login.microsoftonline.com/maristcollege/oauth2/v2.0/";
+	// Change (02) - Ends - JD
 	public final String ENDPOINT_DRIVES = "drives/";
 	public final String ENDPOINT_ME = "me";
 	public final String ENDPOINT_CHILDREN = "/children";
