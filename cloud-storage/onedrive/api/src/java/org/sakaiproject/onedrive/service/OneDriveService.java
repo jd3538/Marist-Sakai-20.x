@@ -38,7 +38,7 @@ public interface OneDriveService {
 	public final String ENDPOINT_GRAPH = "https://graph.microsoft.com/v1.0/";
 	// Change (01) - Begins - JD
 	// public final String ENDPOINT_LOGIN = "https://login.microsoftonline.com/common/oauth2/v2.0/";
-	public final String ENDPOINT_LOGIN = "https://login.microsoftonline.com/maristcollege/oauth2/v2.0/";
+	public final String ENDPOINT_LOGIN = "https://login.microsoftonline.com/maristcollege.onmicrosoft.com/oauth2/v2.0/";
 	// Change (02) - Ends - JD
 	public final String ENDPOINT_DRIVES = "drives/";
 	public final String ENDPOINT_ME = "me";
