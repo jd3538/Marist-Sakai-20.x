@@ -21,6 +21,7 @@ public interface OneDriveService {
 	public final String ONEDRIVE_CLIENT_ID = "client_id";
 	public final String ONEDRIVE_CLIENT_SECRET = "client_secret";
 	public final String ONEDRIVE_CODE = "code";
+	public final String ONEDRIVE_ENDPOINT_URI = "endpoint_uri";
 	public final String ONEDRIVE_GRANT_TYPE = "grant_type";
 	public final String ONEDRIVE_GRANT_TYPE_DEFAULT = "authorization_code";
 	public final String ONEDRIVE_REDIRECT_URI = "redirect_uri";
@@ -38,7 +39,7 @@ public interface OneDriveService {
 	public final String ENDPOINT_GRAPH = "https://graph.microsoft.com/v1.0/";
 	// Change (01) - Begins - JD
 	// public final String ENDPOINT_LOGIN = "https://login.microsoftonline.com/common/oauth2/v2.0/";
-	public final String ENDPOINT_LOGIN = "https://login.microsoftonline.com/maristcollege.onmicrosoft.com/oauth2/v2.0/";
+	public final String ENDPOINT_COMMON_LOGIN = "https://login.microsoftonline.com/maristcollege.onmicrosoft.com/oauth2/v2.0/";
 	// Change (02) - Ends - JD
 	public final String ENDPOINT_DRIVES = "drives/";
 	public final String ENDPOINT_ME = "me";
