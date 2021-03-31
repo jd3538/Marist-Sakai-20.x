@@ -74,6 +74,7 @@ import org.sakaiproject.archive.cover.ArchiveService;
 import org.sakaiproject.authz.api.AuthzGroup;
 import org.sakaiproject.authz.api.AuthzGroupService;
 import org.sakaiproject.authz.api.AuthzPermissionException;
+import org.sakaiproject.authz.api.AuthzRealmLockException;
 import org.sakaiproject.authz.api.GroupNotDefinedException;
 import org.sakaiproject.authz.api.Member;
 import org.sakaiproject.authz.api.PermissionsHelper;
@@ -176,6 +177,7 @@ import org.sakaiproject.util.ResourceLoader;
 import org.sakaiproject.util.SortedIterator;
 import org.sakaiproject.util.Validator;
 import org.sakaiproject.util.api.LinkMigrationHelper;
+import org.sakaiproject.util.comparator.AlphaNumericComparator;
 import org.sakaiproject.util.comparator.GroupTitleComparator;
 import org.sakaiproject.util.comparator.ToolTitleComparator;
 
@@ -208,7 +210,10 @@ public class SiteAction extends PagedResourceActionII {
 	private static ResourceLoader cfgRb = new ResourceLoader("multipletools");
 
 	private Locale comparator_locale = rb.getLocale();	
-	
+
+	private org.sakaiproject.authz.api.SecurityService securityService = (org.sakaiproject.authz.api.SecurityService) ComponentManager.get(
+			org.sakaiproject.authz.api.SecurityService.class);
+
 	private org.sakaiproject.user.api.UserDirectoryService userDirectoryService = (org.sakaiproject.user.api.UserDirectoryService) ComponentManager.get(
 			org.sakaiproject.user.api.UserDirectoryService.class );
 	
@@ -1468,7 +1473,7 @@ public class SiteAction extends PagedResourceActionII {
 		
 		//SAK-29525 Open Template list by default when creating site
 		context.put("isExpandTemplates", ServerConfigurationService.getBoolean("site.setup.creation.expand.template", false));
-		
+
 		// the last visited template index
 		if (preIndex != null)
 			context.put("backIndex", preIndex);
@@ -1477,7 +1482,6 @@ public class SiteAction extends PagedResourceActionII {
 		if (index==3) 
 			index = 4;
 		context.put("templateIndex", String.valueOf(index));
-		
 		
 		// If cleanState() has removed SiteInfo, get a new instance into state
 		SiteInfo siteInfo = new SiteInfo();
@@ -2347,9 +2351,9 @@ public class SiteAction extends PagedResourceActionII {
 						}
 					}
 					if(joinableGroups.size() > 0){
-						Collections.sort(joinableGroups, new Comparator<JoinableGroup>(){
+						Collections.sort(joinableGroups, new Comparator<JoinableGroup>() {
 							public int compare(JoinableGroup g1, JoinableGroup g2){
-								return g1.getTitle().compareToIgnoreCase(g2.getTitle());
+								return new AlphaNumericComparator().compare(g1.getTitle(), g2.getTitle());
 							}
 						});
 					}
@@ -3824,6 +3828,11 @@ public class SiteAction extends PagedResourceActionII {
 			context.put("page", page);
 			context.put("site", site);
 			context.put("layouts", layoutsList());
+			boolean fromHome = state.getAttribute("fromHome") != null ? (boolean) state.getAttribute("fromHome") : false;
+			if(fromHome) {
+				context.put("back", page.getId());
+			}
+			state.removeAttribute("fromHome");
 
 			return (String) getContext(data).get("template") + TEMPLATE[65];
 		}
@@ -4477,14 +4486,20 @@ public class SiteAction extends PagedResourceActionII {
 	}
 
 	/**
+	 * Launch the Manage Overview helper from home
+	 */
+	public void doManageOverviewFromHome(RunData data) {
+		SessionState state = ((JetspeedRunData) data).getPortletSessionState(((JetspeedRunData) data).getJs_peid());
+		state.setAttribute("fromHome", true);
+		doManageOverview(data);
+	}
+		
+	/**
 	 * Launch the Manage Overview helper -- for managing overview layout
 	 */
 	public void doManageOverview(RunData data) {
 		SessionState state = ((JetspeedRunData) data)
 				.getPortletSessionState(((JetspeedRunData) data).getJs_peid());
-
-		// Clean up state on our first entry from a shortcut
-		String panel = data.getParameters().getString("panel");
 
 		siteToolsIntoState(state);
 
@@ -6788,7 +6803,12 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 			if (index == 36 && ("add").equals(option)) {
 				// this is the Add extra Roster(s) case after a site is created
 				state.setAttribute(STATE_TEMPLATE_INDEX, "44");
-			} else if(index == 65) { //after manage overview, go back to main site info page.
+			} else if(index == 65) { //after manage overview, go back to where the call was made
+				String pageId = params.getString("back");
+				if(StringUtils.isNotEmpty(pageId) && !"12".equals(pageId)) {
+					String redirectionUrl = getDefaultSiteUrl(ToolManager.getCurrentPlacement().getContext()) + "/" + SiteService.PAGE_SUBTYPE + "/" + pageId;
+					sendParentRedirect((HttpServletResponse) ThreadLocalManager.get(RequestFilter.CURRENT_HTTP_RESPONSE), redirectionUrl);
+				}
 				state.setAttribute(STATE_TEMPLATE_INDEX, "12");
 			}else if (params.getString("continue") != null) {
 				state.setAttribute(STATE_TEMPLATE_INDEX, params
@@ -8800,32 +8820,40 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 								// add current user as the maintainer
 								Member member = currentSite.getMember(userId);
 								if(member != null){
+									SecurityAdvisor yesMan = new SecurityAdvisor() {
+										public SecurityAdvice isAllowed(String userId, String function, String reference) {
+											if (StringUtils.equalsIgnoreCase(function, SiteService.SECURE_UPDATE_SITE)) {
+												return SecurityAdvice.ALLOWED;
+											} else {
+												return SecurityAdvice.PASS;
+											}
+										}
+									};
+
 									try{
 										siteGroup.insertMember(userId, member.getRole().getId(), true, false);
-										SecurityAdvisor yesMan = new SecurityAdvisor() {
-											public SecurityAdvice isAllowed(String userId, String function, String reference) {
-												return SecurityAdvice.ALLOWED;
-											}
-										};
-										SecurityService.pushAdvisor(yesMan);
-										commitSite(currentSite);
-									} catch (IllegalStateException e) {
+
+										securityService.pushAdvisor(yesMan);
+										SiteService.saveGroupMembership(currentSite);
+									} catch (AuthzRealmLockException e) {
 										log.error(".doJoinableSet: User with id {} cannot be inserted in group with id {} because the group is locked", userId, siteGroup.getId());
-									} catch (Exception e) {
-										log.debug(e.getMessage());
-									}finally{
-										SecurityService.popAdvisor();
+									} catch (IdUnusedException e) {
+										log.error("IdUnusedException while joining site, userId={}, siteId={}, groupId={}", userId, currentSite.getId(), siteGroup.getId());
+									} catch (PermissionException e) {
+										log.error("doJoinableSet could not save new membership because of permissions", e);
+									} finally {
+										securityService.popAdvisor(yesMan);
 									}
 								}
 							}
 						}	
-					}catch (Exception e) {
-						log.debug("Error adding user to group: " + groupRef + ", " + e.getMessage(), e);
+					} catch (GroupNotDefinedException e) {
+						log.error("Error adding user to group because group does not exist: {}", groupRef, e);
 					}
 				}
 			}
 		} catch (IdUnusedException e) {
-			log.debug("Error adding user to group: " + groupRef + ", " + e.getMessage(), e);
+			log.error("IdUnusedException while adding user to group: {}", groupRef, e);
 		}
 	}
 	
@@ -8860,31 +8888,37 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 							// remove current user as the maintainer
 							Member member = currentSite.getMember(userId);
 							if(member != null){
+								SecurityAdvisor yesMan = new SecurityAdvisor() {
+									public SecurityAdvice isAllowed(String userId, String function, String reference) {
+										if (StringUtils.equalsIgnoreCase(function, SiteService.SECURE_UPDATE_SITE)) {
+											return SecurityAdvice.ALLOWED;
+										} else {
+											return SecurityAdvice.PASS;
+										}
+									}
+								};
+
 								try{
 									siteGroup.deleteMember(userId);
-									SecurityAdvisor yesMan = new SecurityAdvisor() {
-										public SecurityAdvice isAllowed(String userId, String function, String reference) {
-											return SecurityAdvice.ALLOWED;
-										}
-									};
-									SecurityService.pushAdvisor(yesMan);
-									commitSite(currentSite);
-								}catch (IllegalStateException e) {
+
+									securityService.pushAdvisor(yesMan);
+									SiteService.saveGroupMembership(currentSite);
+								} catch (AuthzRealmLockException e) {
 									log.error(".doUnjoinableSet: User with id {} cannot be deleted from group with id {} because the group is locked", userId, siteGroup.getId());
-								}catch (Exception e) {
-									log.debug(e.getMessage());
-								}finally{
-									SecurityService.popAdvisor();
+								} catch (PermissionException e) {
+									log.error("doUnjoinableSet: permission exception as userId={}", userId, e);
+								} finally {
+									securityService.popAdvisor(yesMan);
 								}
 							}
 						}
-					}catch (Exception e) {
-						log.debug("Error removing user to group: {}, {}", groupRef, e.getMessage(), e);
+					} catch (GroupNotDefinedException e) {
+						log.error("Error removing user from group: {}", groupRef, e);
 					}
 				}
 			}
 		} catch (IdUnusedException e) {
-			log.debug("Error removing user to group: {}, {}", groupRef, e.getMessage(), e);
+			log.error("IdUnusedException while removing user to group: {}", groupRef, e);
 		}
 	}
 	
@@ -11903,6 +11937,11 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 
 			if (!ltiSelectedTools.isEmpty())
 			{
+				// add in existing lti tools where visibility is stealth
+				existingLtiIds.keySet().stream()
+						.map(k -> m_ltiService.getTool(Long.valueOf(k), Objects.toString(state.getAttribute(STATE_SITE_INSTANCE_ID), "")))
+						.filter(m -> StringUtils.equals("1", Objects.toString(m.get(m_ltiService.LTI_VISIBLE), null)))
+						.forEach(o -> ltiSelectedTools.put(Objects.toString(o.get(m_ltiService.LTI_ID), ""), o));
 				state.setAttribute(STATE_LTITOOL_SELECTED_LIST, ltiSelectedTools);
 			}
 			else
